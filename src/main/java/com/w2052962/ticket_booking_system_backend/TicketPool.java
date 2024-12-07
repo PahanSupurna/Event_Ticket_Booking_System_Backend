@@ -1,31 +1,35 @@
 package com.w2052962.ticket_booking_system_backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import java.util.LinkedList;
 import java.util.Queue;
 
 //Initialized the class
-@Service
+@Component
 public class TicketPool {
-    private final Queue<String> ticketQueue; //Queue to store tickets in the system
+    private final Queue<Ticket> ticketQueue; //Queue to store tickets in the system
     private final Configuration configuration; // Object of Configuration class
     private int ticketNumber; //To get the ticket number for displaying.
     private int soldTickets; //To keep the track of the number of tickets that were sold.
+    private final Customer customer;
+    private final Vendor vendor;
 
     // Constructor
     @Autowired
-    public TicketPool(Configuration configuration) {
+    public TicketPool(Configuration configuration, Customer customer, Vendor vendor) {
         this.ticketQueue = new LinkedList<>();
         this.configuration = configuration;
         this.ticketNumber = 0;
         this.soldTickets = 0;
+        this.customer = customer;
+        this.vendor = vendor;
     }
 
     // Method for adding the tickets to the system by Vendors.
     public synchronized void addTicket() throws InterruptedException {
         while (soldTickets >= configuration.getTotalTickets()) {
-            //notifyAll(); // Notify all threads to avoid deadlock
+            notifyAll(); // Notify all threads to avoid deadlock
             return; // Stop further ticket addition
         }
 
@@ -36,9 +40,9 @@ public class TicketPool {
         }
 
         ticketNumber++;
-        String ticket = "Ticket Number " + ticketNumber; //creates the ticket name to display
+        Ticket ticket = new Ticket();
         ticketQueue.offer(ticket); //Adds the ticket to the queue
-        System.out.println(ticket + " Successfully added to the system | Number of tickets in the system = " + ticketQueue.size());
+        System.out.println(ticket + " Successfully added to the system by "+vendor.generateVendorID()+" | Number of tickets in the system = " + ticketQueue.size());
         System.out.println(" ");
         notifyAll(); //Notifies the customers about the added tickets.
     }
@@ -51,9 +55,9 @@ public class TicketPool {
             wait(); //waits till a vendor adds tickets to the system
         }
 
-        String ticket = ticketQueue.poll(); //Removes the ticket from the system
+        Ticket ticket = ticketQueue.poll(); //Removes the ticket from the system
         soldTickets++;
-        System.out.println(ticket + " is successfully purchased | Number of tickets remaining in the system = " + ticketQueue.size());
+        System.out.println(ticket + " is successfully purchased by " + customer.generateCustomerID() +" | Number of tickets remaining in the system = " + ticketQueue.size());
         System.out.println(" ");
         notifyAll(); //Notifies the vendors about the available ticket slot
     }
