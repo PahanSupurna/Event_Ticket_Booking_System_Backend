@@ -11,7 +11,7 @@ import java.util.Date;
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long ticketID;
     private String ticketNumber;
     private boolean soldStatus;
 }
