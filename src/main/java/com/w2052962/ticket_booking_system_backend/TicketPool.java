@@ -57,4 +57,8 @@ public class TicketPool {
         System.out.println(" ");
         notifyAll(); //Notifies the vendors about the available ticket slot
     }
+
+    public synchronized boolean allTicketsSold() {
+        return soldTickets >= configuration.getTotalTickets();
+    }
 }
