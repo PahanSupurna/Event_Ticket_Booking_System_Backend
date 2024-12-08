@@ -49,6 +49,11 @@ public class Customer {
     }
 
     public String generateCustomerID() {
-        return "Customer ID - " + UUID.randomUUID().toString(); // Example: TICKET-123e4567-e89b-12d3-a456-426614174000
+        return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public String toString() {
+        return "Customer ID - "+ Integer.toHexString(System.identityHashCode(this));
     }
 }

@@ -14,7 +14,7 @@ public class EventTicketBookingSystemApplication {
     CommandLineRunner runApp(Configuration configuration, TicketPool ticketPool, VendorLogic vendorLogic, CustomerLogic customerLogic) {
         return args -> {
             // Set initial configuration values
-            configuration.setTotalTickets(20);
+            configuration.setTotalTickets(10);
             configuration.setReleaseRate(4);
             configuration.setRetrievalRate(1);
             configuration.setTicketCapacity(10);
@@ -35,16 +35,22 @@ public class EventTicketBookingSystemApplication {
             // Save to text file
             logger.saveInTextFile();
 
-            // Start VendorLogic and CustomerLogic threads
-            Thread vendorThread = new Thread(vendorLogic);
-            Thread customerThread = new Thread(customerLogic);
 
-            vendorThread.start();
-            customerThread.start();
+            // Start VendorLogic threads
+            int numberOfVendors = 6; // Hard-code of the number of vendors
+            Thread[] vendorThreads = new Thread[numberOfVendors];
+            for (int i = 1; i < numberOfVendors; i++) {
+                vendorThreads[i] = new Thread(new VendorLogic(ticketPool, configuration), "Vendor " + i);
+                vendorThreads[i].start();
+            }
 
-            vendorThread.join(); // Wait for threads to finish
-            customerThread.join();
-
+            int numberOfCustomers = 6;
+            Thread[] customerThreads = new Thread[numberOfCustomers];
+            for (int i = 1; i < customerThreads.length; i++) {
+                customerThreads[i] = new Thread(new CustomerLogic(ticketPool, configuration), "Customer " + i);
+                customerThreads[i].start();
+            }
+            
             System.out.println("All tickets processed successfully!");
         };
     }

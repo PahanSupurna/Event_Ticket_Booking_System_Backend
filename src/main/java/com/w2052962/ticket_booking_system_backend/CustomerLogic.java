@@ -19,7 +19,7 @@ public class CustomerLogic implements Runnable {
         try {
             while (true) {
                 synchronized (ticketPool) {
-                    if (ticketPool.allTicketsSold()) {
+                    if (ticketPool.soldStatus()) {
                         break; // Stop if all tickets are sold
                     }
                     ticketPool.buyTicket();

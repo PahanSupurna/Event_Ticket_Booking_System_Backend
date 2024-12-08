@@ -12,8 +12,6 @@ public class TicketPool {
     private final Configuration configuration; // Object of Configuration class
     private int ticketNumber; //To get the ticket number for displaying.
     private int soldTickets; //To keep the track of the number of tickets that were sold.
-    private final Customer customer;
-    private final Vendor vendor;
 
     // Constructor
     @Autowired
@@ -22,8 +20,6 @@ public class TicketPool {
         this.configuration = configuration;
         this.ticketNumber = 0;
         this.soldTickets = 0;
-        this.customer = customer;
-        this.vendor = vendor;
     }
 
     // Method for adding the tickets to the system by Vendors.
@@ -41,9 +37,9 @@ public class TicketPool {
 
         ticketNumber++;
         Ticket ticket = new Ticket();
+        Vendor vendor = new Vendor();
         ticketQueue.offer(ticket); //Adds the ticket to the queue
-        System.out.println(ticket + " Successfully added to the system by "+vendor.generateVendorID()+" | Number of tickets in the system = " + ticketQueue.size());
-        System.out.println(" ");
+        System.out.println(Thread.currentThread().getName()+ " | "+ ticket + " Successfully added to the system by "+vendor+" | Number of tickets in the system = " + ticketQueue.size());
         notifyAll(); //Notifies the customers about the added tickets.
     }
 
@@ -57,12 +53,16 @@ public class TicketPool {
 
         Ticket ticket = ticketQueue.poll(); //Removes the ticket from the system
         soldTickets++;
-        System.out.println(ticket + " is successfully purchased by " + customer.generateCustomerID() +" | Number of tickets remaining in the system = " + ticketQueue.size());
-        System.out.println(" ");
+        Customer customer = new Customer();
+        System.out.println(Thread.currentThread().getName()+ " | "+ticket + " is successfully purchased by " + customer +" | Number of tickets remaining in the system = " + ticketQueue.size());
         notifyAll(); //Notifies the vendors about the available ticket slot
     }
 
-    public synchronized boolean allTicketsSold() {
-        return soldTickets >= configuration.getTotalTickets();
+    public synchronized boolean soldStatus(){
+        boolean sold = soldTickets>= configuration.getTotalTickets();
+        if(sold){
+            notifyAll();
+        }
+        return sold;
     }
 }

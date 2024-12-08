@@ -1,14 +1,18 @@
 package com.w2052962.ticket_booking_system_backend;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Entity
 @Component
+@Entity
 public class Ticket {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String ticketID; // Use String to accommodate UUID
     private String ticketNumber;
 
@@ -26,17 +30,13 @@ public class Ticket {
         this.ticketNumber = ticketNumber;
     }
 
-
-    public Ticket() {
-        this.ticketID = generateTicketID(); // Generate random ticket ID
-    }
-
     public String generateTicketID() {
         return UUID.randomUUID().toString(); // Example: TICKET-123e4567-e89b-12d3-a456-426614174000
     }
 
     @Override
     public String toString() {
-        return "Ticket ID - " + ticketID ;
+        return "Ticket ID - " + Integer.toHexString(System.identityHashCode(this));
     }
+
 }

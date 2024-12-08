@@ -42,4 +42,8 @@ public class Vendor {
         return "Vendor ID - "+ UUID.randomUUID().toString(); // Example: TICKET-123e4567-e89b-12d3-a456-426614174000
     }
 
+    @Override
+    public String toString() {
+        return "Vendor ID - "+ Integer.toHexString(System.identityHashCode(this));
+    }
 }
