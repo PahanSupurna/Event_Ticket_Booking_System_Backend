@@ -13,14 +13,14 @@ import java.util.UUID;
 public class Vendor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int vendorID;
+    private String vendorID;
     private String vendorName;
     private String email;
 
-    public int getVendorID() {
+    public String getVendorID() {
         return vendorID;
     }
-    public void setVendorID(int vendorID) {
+    public void setVendorID(String vendorID) {
         this.vendorID = vendorID;
     }
 

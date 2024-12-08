@@ -1,0 +1,4 @@
+Total Tickets: 10
+Release Rate: 4
+Retrieval Rate: 1
+Ticket Capacity: 10
