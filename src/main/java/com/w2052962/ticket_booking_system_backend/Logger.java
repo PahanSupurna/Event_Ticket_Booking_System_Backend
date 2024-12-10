@@ -17,16 +17,13 @@ public class Logger {
     }
 
     public void saveInTextFile() {
-        try (FileWriter fileWriter = new FileWriter("Ticketing_System.txt")) {
-            fileWriter.write("Total Tickets: " + totalTickets + "\n");
-            fileWriter.write("Release Rate: " + releaseRate + "\n");
-            fileWriter.write("Retrieval Rate: " + retrievalRate + "\n");
-            fileWriter.write("Ticket Capacity: " + ticketCapacity + "\n");
-
-            System.out.println("Saved ticket information to a text file.");
-            System.out.println("---------------------------------------");
+        try (FileWriter writer = new FileWriter("configuration.txt")) {
+            writer.write("Total Tickets: " + totalTickets + "\n");
+            writer.write("Release Rate: " + releaseRate + "\n");
+            writer.write("Retrieval Rate: " + retrievalRate + "\n");
+            writer.write("Ticket Capacity: " + ticketCapacity + "\n");
         } catch (IOException e) {
-            System.out.println("Error occurred during the saving process: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

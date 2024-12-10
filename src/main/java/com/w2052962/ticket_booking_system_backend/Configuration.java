@@ -47,9 +47,9 @@ public class Configuration {
             return false;
         }
 
-        if (retrievalRate>releaseRate){
-            return false;
-        }
+//        if (retrievalRate>releaseRate){
+//            return false;
+//        }
         return true;
     }
 }

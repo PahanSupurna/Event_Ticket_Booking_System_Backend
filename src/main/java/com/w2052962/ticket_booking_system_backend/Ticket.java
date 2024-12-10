@@ -4,11 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import org.springframework.stereotype.Component;
-
 import java.util.UUID;
 
-@Component
 @Entity
 public class Ticket {
     @Id
@@ -23,13 +20,6 @@ public class Ticket {
         this.ticketID = ticketID;
     }
 
-//    public String getTicketNumber() {
-//        return ticketNumber;
-//    }
-//    public void setTicketNumber(String ticketNumber) {
-//        this.ticketNumber = ticketNumber;
-//    }
-
     public String generateTicketID() {
         return UUID.randomUUID().toString(); // Example: TICKET-123e4567-e89b-12d3-a456-426614174000
     }
@@ -38,5 +28,4 @@ public class Ticket {
     public String toString() {
         return "Ticket ID - " + Integer.toHexString(System.identityHashCode(this));
     }
-
 }

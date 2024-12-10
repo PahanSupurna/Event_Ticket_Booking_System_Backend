@@ -8,25 +8,23 @@ public class VendorLogic implements Runnable {
     private final TicketPool ticketPool;
     private final int releaseRate;
 
-    // Constructor
     @Autowired
     public VendorLogic(TicketPool ticketPool, Configuration configuration) {
         this.ticketPool = ticketPool;
         this.releaseRate = configuration.getReleaseRate();
     }
 
-    //A method to check the availability of the ticket queue and add tickets from the vendor
     @Override
     public void run() {
         try {
             while (true) {
                 synchronized (ticketPool) {
                     if (ticketPool.soldStatus()) {
-                        break; // Stop if total tickets have been sold
+                        break;
                     }
                     ticketPool.addTicket();
                 }
-                Thread.sleep(releaseRate*1000L);
+                Thread.sleep(releaseRate * 1000L);
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
