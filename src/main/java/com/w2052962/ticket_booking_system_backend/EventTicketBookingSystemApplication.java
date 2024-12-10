@@ -30,29 +30,8 @@ public class EventTicketBookingSystemApplication {
     @Bean
     CommandLineRunner runApp() {
         return args -> {
-            Scanner scanner = new Scanner(System.in);
-
-            // Prompt for configuration settings
-            System.out.print("Enter total number of tickets: ");
-            int totalTickets = scanner.nextInt();
-
-            System.out.print("Enter ticket release rate (seconds): ");
-            int releaseRate = scanner.nextInt();
-
-            System.out.print("Enter customer retrieval rate (seconds): ");
-            int retrievalRate = scanner.nextInt();
-
-            System.out.print("Enter maximum ticket capacity: ");
-            int ticketCapacity = scanner.nextInt();
-
-            // Set configuration values
-            configuration.setTotalTickets(totalTickets);
-            configuration.setReleaseRate(releaseRate);
-            configuration.setRetrievalRate(retrievalRate);
-            configuration.setTicketCapacity(ticketCapacity);
-
+            // Validate configuration
             if (!configuration.validate()) {
-                System.out.println("Invalid configuration. Please check the input values.");
                 return;
             }
 
@@ -68,21 +47,20 @@ public class EventTicketBookingSystemApplication {
             logger.saveInTextFile();
 
             // Start VendorLogic threads
-            int numberOfVendors = 6; // Hard-code of the number of vendors
+            int numberOfVendors = 6;
             Thread[] vendorThreads = new Thread[numberOfVendors];
-            for (int i = 1; i < numberOfVendors; i++) {
-                vendorThreads[i] = new Thread(new VendorLogic(ticketPool, configuration), "Vendor " + i);
+            for (int i = 0; i < numberOfVendors; i++) {
+                vendorThreads[i] = new Thread(new VendorLogic(ticketPool, configuration), "Vendor " + (i + 1));
                 vendorThreads[i].start();
             }
 
+            // Start CustomerLogic threads
             int numberOfCustomers = 6;
             Thread[] customerThreads = new Thread[numberOfCustomers];
-            for (int i = 1; i < customerThreads.length; i++) {
-                customerThreads[i] = new Thread(new CustomerLogic(ticketPool, configuration), "Customer " + i);
+            for (int i = 0; i < customerThreads.length; i++) {
+                customerThreads[i] = new Thread(new CustomerLogic(ticketPool, configuration), "Customer " + (i + 1));
                 customerThreads[i].start();
             }
-
-            System.out.println("All tickets processed successfully!");
         };
     }
 }

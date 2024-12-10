@@ -11,17 +11,17 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String ticketID; // Use String to accommodate UUID
-    //private String ticketNumber;
 
     public String getTicketID() {
         return ticketID;
     }
+
     public void setTicketID(String ticketID) {
         this.ticketID = ticketID;
     }
 
     public String generateTicketID() {
-        return UUID.randomUUID().toString(); // Example: TICKET-123e4567-e89b-12d3-a456-426614174000
+        return UUID.randomUUID().toString();
     }
 
     @Override

@@ -20,14 +20,14 @@ public class CustomerLogic implements Runnable {
             while (true) {
                 synchronized (ticketPool) {
                     if (ticketPool.soldStatus()) {
-                        break;
+                        break; // Stop if all tickets are sold
                     }
                     ticketPool.buyTicket();
                 }
                 Thread.sleep(retrievalRate * 1000L);
             }
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            Thread.currentThread().interrupt();  // Handle interrupt properly
         }
     }
 }
