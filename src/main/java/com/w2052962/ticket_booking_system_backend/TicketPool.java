@@ -25,7 +25,6 @@ public class TicketPool {
     // Method for adding the tickets to the system by Vendors.
     public synchronized void addTicket() throws InterruptedException {
         while (soldTickets >= configuration.getTotalTickets()) {
-//            notifyAll(); // Notify all threads to avoid deadlock
             System.out.println("All sold");
             return; // Stop further ticket addition
         }
@@ -41,7 +40,7 @@ public class TicketPool {
             Ticket ticket = new Ticket();
             Vendor vendor = new Vendor();
             ticketQueue.offer(ticket); //Adds the ticket to the queue
-            System.out.println(Thread.currentThread().getName() + " | " + ticket + " Successfully added to the system by " + vendor + " | Number of tickets in the system = " + ticketQueue.size());
+            System.out.println(ticket + " Successfully added to the system by " + vendor + " | Remaining tickets = " + ticketQueue.size());
             notifyAll(); //Notifies the customers about the added tickets.
         }
         else {
@@ -59,7 +58,7 @@ public class TicketPool {
         Ticket ticket = ticketQueue.poll(); //Removes the ticket from the system
         soldTickets++;
         Customer customer = new Customer();
-        System.out.println(Thread.currentThread().getName()+ " | "+ticket + " is successfully purchased by " + customer +" | Number of tickets remaining in the system = " + ticketQueue.size());
+        System.out.println(ticket + " is successfully purchased by " + customer +" | Remaining tickets = " + ticketQueue.size());
         notifyAll(); //Notifies the vendors about the available ticket slot
     }
 
