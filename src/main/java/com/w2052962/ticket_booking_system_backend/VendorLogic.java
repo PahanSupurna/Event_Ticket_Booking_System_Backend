@@ -22,6 +22,7 @@ public class VendorLogic implements Runnable {
             while (true) {
                 synchronized (ticketPool) {
                     if (ticketPool.soldStatus()) {
+                        System.out.println(Thread.currentThread().getName() + " stopped.");
                         break; // Stop if total tickets have been sold
                     }
                     ticketPool.addTicket();

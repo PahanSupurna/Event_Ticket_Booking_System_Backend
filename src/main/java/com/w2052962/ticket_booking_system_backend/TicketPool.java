@@ -25,7 +25,8 @@ public class TicketPool {
     // Method for adding the tickets to the system by Vendors.
     public synchronized void addTicket() throws InterruptedException {
         while (soldTickets >= configuration.getTotalTickets()) {
-            notifyAll(); // Notify all threads to avoid deadlock
+//            notifyAll(); // Notify all threads to avoid deadlock
+            System.out.println("All sold");
             return; // Stop further ticket addition
         }
 
@@ -35,19 +36,23 @@ public class TicketPool {
             wait(); //waits till a customer buys a ticket
         }
 
-        ticketNumber++;
-        Ticket ticket = new Ticket();
-        Vendor vendor = new Vendor();
-        ticketQueue.offer(ticket); //Adds the ticket to the queue
-        System.out.println(Thread.currentThread().getName()+ " | "+ ticket + " Successfully added to the system by "+vendor+" | Number of tickets in the system = " + ticketQueue.size());
-        notifyAll(); //Notifies the customers about the added tickets.
+        if (ticketNumber <= configuration.getTotalTickets()) {
+            ticketNumber++;
+            Ticket ticket = new Ticket();
+            Vendor vendor = new Vendor();
+            ticketQueue.offer(ticket); //Adds the ticket to the queue
+            System.out.println(Thread.currentThread().getName() + " | " + ticket + " Successfully added to the system by " + vendor + " | Number of tickets in the system = " + ticketQueue.size());
+            notifyAll(); //Notifies the customers about the added tickets.
+        }
+        else {
+            System.out.println("Ticket limit reached. No more tickets can be added.");
+        }
     }
 
     // Method for buying tickets in the system by customers.
     public synchronized void buyTicket() throws InterruptedException {
         // Checks if there is no available tickets in the system.
         while (ticketQueue.isEmpty()) {
-            System.out.println("There are no available tickets in the system. Please wait!");
             wait(); //waits till a vendor adds tickets to the system
         }
 
