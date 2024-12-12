@@ -1,4 +1,4 @@
-package com.w2052962.ticket_booking_system_backend;
+package com.w2052962.ticket_booking_system_backend.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

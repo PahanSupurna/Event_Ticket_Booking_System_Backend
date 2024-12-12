@@ -1,5 +1,6 @@
-package com.w2052962.ticket_booking_system_backend;
+package com.w2052962.ticket_booking_system_backend.logics;
 
+import com.w2052962.ticket_booking_system_backend.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

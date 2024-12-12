@@ -1,12 +1,15 @@
 package com.w2052962.ticket_booking_system_backend;
 
+import com.w2052962.ticket_booking_system_backend.config.Configuration;
+import com.w2052962.ticket_booking_system_backend.log.Logger;
+import com.w2052962.ticket_booking_system_backend.logics.CustomerLogic;
+import com.w2052962.ticket_booking_system_backend.logics.TicketPool;
+import com.w2052962.ticket_booking_system_backend.logics.VendorLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.Scanner;
 
 @SpringBootApplication
 public class EventTicketBookingSystemApplication {
@@ -43,7 +46,7 @@ public class EventTicketBookingSystemApplication {
                     configuration.getTicketCapacity()
             );
 
-            // Save to text file
+            // Save to dtext file
             logger.saveInTextFile();
 
             // Start VendorLogic threads

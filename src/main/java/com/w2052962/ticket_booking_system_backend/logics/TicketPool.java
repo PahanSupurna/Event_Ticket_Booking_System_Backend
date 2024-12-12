@@ -1,5 +1,9 @@
-package com.w2052962.ticket_booking_system_backend;
+package com.w2052962.ticket_booking_system_backend.logics;
 
+import com.w2052962.ticket_booking_system_backend.config.Configuration;
+import com.w2052962.ticket_booking_system_backend.idGenerate.Customer;
+import com.w2052962.ticket_booking_system_backend.idGenerate.Ticket;
+import com.w2052962.ticket_booking_system_backend.idGenerate.Vendor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.LinkedList;
@@ -41,7 +45,7 @@ public class TicketPool {
             Vendor vendor = new Vendor();
             ticketQueue.offer(ticket); //Adds the ticket to the queue
             System.out.println(ticket + " Successfully added to the system by " + vendor + " | Remaining tickets = " + ticketQueue.size());
-            notifyAll(); //Notifies the customers about the added tickets.
+            notifyAll();
         }
         else {
             System.out.println("Ticket limit reached. No more tickets can be added.");

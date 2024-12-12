@@ -1,4 +1,4 @@
-package com.w2052962.ticket_booking_system_backend;
+package com.w2052962.ticket_booking_system_backend.idGenerate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

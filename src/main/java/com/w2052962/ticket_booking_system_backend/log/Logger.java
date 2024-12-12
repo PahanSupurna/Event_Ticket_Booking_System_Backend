@@ -1,4 +1,4 @@
-package com.w2052962.ticket_booking_system_backend;
+package com.w2052962.ticket_booking_system_backend.log;
 
 import java.io.FileWriter;
 import java.io.IOException;
