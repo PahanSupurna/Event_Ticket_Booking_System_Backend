@@ -1,4 +1,4 @@
-Total Tickets: 12
+Total Tickets: 6
 Release Rate: 3
 Retrieval Rate: 4
 Ticket Capacity: 5
